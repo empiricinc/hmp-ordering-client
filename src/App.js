@@ -10,9 +10,9 @@ import './App.scss';
 // routes
 import routes from './routes';
 
-// common components
-import Header from './common/components/Header'
-import Footer from './common/components/Footer'
+// header and footer
+import Header from './containers/Header'
+import Footer from './containers/Footer'
 
 class App extends Component {
 
