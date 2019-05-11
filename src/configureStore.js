@@ -1,11 +1,11 @@
-import { createHashHistory } from 'history'
-import { applyMiddleware, compose, createStore } from 'redux'
+import { createBrowserHistory } from 'history'
+import { applyMiddleware, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createRootReducer from './reducers'
+import createRootReducer from './rootReducer'
 import thunk from 'redux-thunk';
 // create history
-export const history = createHashHistory();
+export const history = createBrowserHistory();
 
 // define on your own as per requirment
 const preloadedState = {};
@@ -17,7 +17,7 @@ const store = createStore(
     applyMiddleware(
       routerMiddleware(history),
       thunk
-    ),
+     ),
   )
 )
 export default store;
