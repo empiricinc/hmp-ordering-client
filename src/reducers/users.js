@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import * as types from '../types'
-// import Cookies from 'js-cookie'
 
 const loading = (state = false, action) => {
   switch(action.type) {
