@@ -1,8 +1,16 @@
 import { combineReducers } from 'redux'
 import users from './users'
+// import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
+// import allReducers from './reducers'
 
-const allReducers = combineReducers({
-	users,
-})
+export default (history) => combineReducers({
+  users,
+  router: connectRouter(history),
+});
 
-export default allReducers;
+// const allReducers = combineReducers({
+  
+// })
+
+// export default allReducers;
