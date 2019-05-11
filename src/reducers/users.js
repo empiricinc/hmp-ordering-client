@@ -12,7 +12,7 @@ const loading = (state = false, action) => {
   }
 }
 
-export default userReducers = combineReducers({
+export default combineReducers({
   loading,
 })
 
