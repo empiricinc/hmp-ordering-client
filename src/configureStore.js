@@ -2,8 +2,10 @@ import { createBrowserHistory } from 'history'
 import { applyMiddleware, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createRootReducer from './rootReducer'
+import createRootReducer from '../src/reducers'
 import thunk from 'redux-thunk';
+import logger from 'redux-logger'
+
 // create history
 export const history = createBrowserHistory();
 
@@ -16,7 +18,8 @@ const store = createStore(
   composeWithDevTools(
     applyMiddleware(
       routerMiddleware(history),
-      thunk
+      thunk,
+      logger
      ),
   )
 )
