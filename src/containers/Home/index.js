@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-// import UserRepos from './containers/UserRepos';
+import React from 'react';
 import './style.scss';
+import Form from './Form'
 
-class Home extends Component {
+
+class Home extends React.Component {
+  handleSubmit = (model) => {
+    console.log(model)
+    
+  }
 	render() {
 		return (
 			<div id="home">
-				<Container>
-					<h2 className="text-center">Home</h2>
-				</Container>
+				<Form onSubmit={this.handleSubmit}/>
 			</div>
 		);
 	}
 }
 
 export default Home;
+
+// export default reduxForm({
+//   form: 'Bookingform'
+// })(Form)
