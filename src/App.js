@@ -21,11 +21,11 @@ class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div className="App">
-            <Header />
+            {/* <Header /> */}
             <div className="wrap">
               {routes}
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </ConnectedRouter>
       </Provider>
