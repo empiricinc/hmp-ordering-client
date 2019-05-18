@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 // import {renderField} from '../../components/ReduxFormComponents'
 
 import './style.scss';
-import { renderField, isRequired } from '../../components/ReduxFormComponents';
+import { renderField, isRequired, simpleSelect, Timer, renderTextarea } from '../../components/ReduxFormComponents';
 
 
 class Form extends Component {
@@ -13,12 +13,85 @@ class Form extends Component {
   }
 	render() {
 		return (
-			<div id="home">
+			<div className='homeContainer' id="home">
 				<Container>
-					<h2 className="text-center">Form</h2>
           <form onSubmit={this.props.handleSubmit}>
-            <Field name="hours" component={renderField} type="number" label='Hours' validate={[isRequired]} />
-            <button type='submit'>Submit</button>
+            <div className='form-fixed-submit'>
+              <Field
+                name="product_type"
+                component={simpleSelect} 
+                selectOptions={[{value:'mutton', name:'Mutton'}, {value:'beef', name:'Beef'}, {value:'chicken', name:'chicken'} ]} 
+                label='Product Type' 
+                placeholder='Select Product Type' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="date"
+                component={renderField}
+                type="date" 
+                label='Date of delivery' 
+                placeholder='Date of Delivery' 
+                validate={[isRequired]}
+              />
+
+              <Field
+                name="product_type"
+                component={simpleSelect} 
+                selectOptions={[{value:'ship', name:'Ship'}, {value:'airline', name:'Airlines'}, {value:'by_road', name:'By Road'} ]} 
+                label='Mode of Delivery' 
+                placeholder='Select Delivery Mode' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="order_type"
+                component={simpleSelect} 
+                selectOptions={[{value:'KGs', name:'KGs'}, {value:'quarters', name:'Quarters'}, {value:'legs', name:'Legs'}, {value:'chest', name:'Chest'}, {value:'wings', name:'Wings'}, ]} 
+                label='Order Type' 
+                placeholder='Select Order Type' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="mode"
+                component={simpleSelect} 
+                selectOptions={[ {value:'bulk', name:'Bulk'}, {value:'container', name:'Container'} ]} 
+                label='Order Mode' 
+                placeholder='Select Order Mode' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="flight_name"
+                component={renderField}
+                type="text" 
+                label='Flight Name' 
+                placeholder='Name of Flight' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="flight_time"
+                component={Timer}
+                type="text" 
+                label='Flight Time' 
+                placeholder='Time of Flight' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="carcass_weight"
+                component={renderField}
+                type="number" 
+                label='Carcass Weight' 
+                placeholder='Weight of the Carcass' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="notes"
+                component={renderTextarea}
+                type="text" 
+                label='Notes' 
+                placeholder='Any notes regarding the order' 
+                validate={[isRequired]}
+              />
+            </div>
+            <button className='btn-block-fixed btn-hmp-red' type='submit'>Submit</button>
           </form>
 				</Container>
 			</div>
