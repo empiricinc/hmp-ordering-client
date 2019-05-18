@@ -1,0 +1,44 @@
+
+.picker_container{
+  margin-left: 58px;
+}
+.time_picker_modal_header{
+  background-color: #89CD52;
+}
+.picker_pointer .pointer_drag{
+  background-color: #89CD52;
+
+}
+.picker_pointer{
+  background-color: #89CD52; 
+}
+.picker_center{
+  background-color: #89CD52;
+}
+.validation-error {
+  color: red;
+  text-align: left;
+}
+.react_times_button {
+  height: 46px;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  & .preview_container {
+      line-height: 46px;
+      & svg {
+          height: 18px;
+          top: 13px;
+      }
+  }
+}
+
+.classic_theme_container .classic_time.light:hover {
+  background-color: #89CD52;
+  color: #fff;
+}
+.classic_theme_container .classic_time.light.active, .classic_theme_container .classic_time.light:hover {
+  background-color: #89CD52;
+  color: #fff;
+}
