@@ -1,4 +1,8 @@
 import React, { Component, useState } from 'react'
+import TimePicker from 'react-times';
+import 'react-times/css/classic/default.css';
+import './style.scss'
+import moment from 'moment'
 
 
 export const normalizeCnic = (value) => {
@@ -55,16 +59,73 @@ export const disabledField = ({ type, label, input, meta: { touched, error } }) 
     <div className='inputform'> <input className='form-control input-box' {...input} type={type} placeholder={label} readOnly="readonly" ></input></div>)
 
 }
-export const renderField = ({ type, label, input, min, max, meta: { touched, error } }) => {
+export const renderField = ({ type, label, input, min, placeholder, max, meta: { touched, error } }) => {
 
   const dateProps = type == 'date' ? { min, max } : null
 
-  return (<div className='inputform'>
-    <input className='form-control input-box' {...dateProps} {...input} type={type} placeholder={label} autoComplete='off' ></input>
+  return (<div className='inputform space-4'>
+    <h6 className='inputLabel text-left'>{label}</h6>
+    <input className='selectFormInput' {...dateProps} {...input} type={type} placeholder={placeholder} autoComplete='off' ></input>
     {touched && error &&
-      <p className='price-box' >{error}</p>}
+      <p className='validation-error' >{error}</p>}
   </div>
   )
+}
+
+export const renderTextarea = ({ type, label, input, min, placeholder, max, meta: { touched, error } }) => {
+
+  const dateProps = type == 'date' ? { min, max } : null
+
+  return (<div className='inputform space-4'>
+    <h6 className='inputLabel text-left'>{label}</h6>
+    <textarea rows={5} className='selectFormInput' {...dateProps} {...input} type={type} placeholder={placeholder} autoComplete='off' ></textarea>
+    {touched && error &&
+      <p className='validation-error' >{error}</p>}
+  </div>
+  )
+}
+
+export const simpleSelect = ({ type, label, input, min, selectOptions = [], placeholder, max, meta: { touched, error } }) => {
+
+  const dateProps = type == 'date' ? { min, max } : null;
+  return (<div className='inputform space-4'>
+    <h6 className='inputLabel text-left'>{label}</h6>
+    <select  onChange={(e) => {input.onChange(e.target.value)}}  className='selectFormInput'>
+      <option value={null}> {placeholder} </option>
+      {selectOptions.map((item) => {
+          return <option value={item.value}> {item.name} </option>
+      })}
+    </select>
+    {touched && error &&
+      <p className='validation-error' >{error}</p>}
+  </div>
+  )
+}
+
+export const Timer = (props) => {
+  const time = moment().format('LT')
+  const [isTime, setTime] = useState(time)
+  props.input.onChange(isTime)  
+  return (<div className='space-4'>
+    <h6 className='inputLabel text-left'>{props.label}</h6>
+    <TimePicker
+      theme={'classic'}
+      colorPalette="light"
+      time={isTime}
+      // theme="material"
+      onTimeChange={
+        (ev)=>{
+          // console.log(ev);
+          // console.log('from moment',setTime(moment(`${ev.hour}:${ev.minute} ${ev.meridiem}`).format('LT'))); 
+          let time = ev.hour+':'+ev.minute + ' ' + ev.meridiem;
+          setTime(time)}
+        }
+      timeMode="12"
+      timezone="Asia/Karachi"
+    />
+  </div>
+  )
+
 }
 
 export const isRequired = value => value ? undefined : 'This Field is Required'
