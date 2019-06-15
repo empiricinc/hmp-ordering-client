@@ -11,7 +11,7 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div className='homeContainer' id="home">
-				<img className='logo' src={require('../../static/logo-hmp.png')} alt=""/>
+				{/* <img className='logo' src={require('../../static/logo-hmp.png')} alt=""/> */}
 				<Form onSubmit={this.handleSubmit}/>
 			</div>
 		);
