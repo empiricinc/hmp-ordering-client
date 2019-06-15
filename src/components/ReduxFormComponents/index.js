@@ -3,6 +3,7 @@ import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
 import './style.scss'
 import moment from 'moment'
+import Dropzone from 'react-dropzone';
 
 
 export const normalizeCnic = (value) => {
@@ -101,6 +102,79 @@ export const simpleSelect = ({ type, label, input, min, selectOptions = [], plac
   </div>
   )
 }
+
+export const renderDropzoneInput = (field) => {
+  const files = field.input.value;
+  const label = field.label;
+  return (
+    <React.Fragment>
+      <h6 className='inputLabel text-left'>{label}</h6>
+      <div className='dropzoneInput'>
+        <Dropzone
+          name={field.name}
+          onDrop={( filesToUpload, e ) => field.input.onChange(filesToUpload)}
+        >
+          {({getRootProps, getInputProps}) => (
+            <div {...getRootProps()}>
+              <input {...getInputProps()} multiple={false} />
+              <p className='no-margin'>Drop or Select file</p>
+            </div>
+          )}
+        </Dropzone>
+      </div>
+      <div className='dropzoneFileList'>
+        {field.meta.touched &&
+          field.meta.error &&
+          <span className="error">{field.meta.error}</span>}
+        {files && Array.isArray(files) && (
+          <ul>
+            { files.map((file, i) => <li key={i}>{file.name}</li>) }
+            <p className='text-center' onClick={() => {field.input.onChange(null)}}>remove files</p>
+          </ul>
+        )}
+        </div>
+    </React.Fragment>
+  );
+}
+
+export class FileInput extends Component {
+  constructor(props) {
+    super(props)
+  }
+  fileToBase64 (filesList) {
+    /// logic
+    // console.log(value.target.files);
+    var base64ImgArray = [];
+    for (var i = 0; i < filesList.length; i++) {
+      var reader = new FileReader();
+      reader.readAsDataURL(filesList[i]);
+      reader.onload = () => {
+        console.log(reader.result);
+        base64ImgArray.push(reader.result);
+      };
+      reader.onerror = (error) => {
+        console.log('Error: ', error);
+      };
+    }
+    // var base64ImgArray = filesList.map((file, index) => {
+    // })
+
+    console.log(base64ImgArray);
+    this.props.input.onChange(base64ImgArray)
+
+  }
+  render() {
+    const { multi, label } = this.props;
+    return (
+      <div>
+        <h6 className='inputLabel text-left'>{label}</h6>
+        <div className='dropzoneInput'>
+          <input multiple={multi} onChange ={ (value) => { this.fileToBase64(value.target.files) }} type='file'/>
+        </div>
+      </div>
+    )
+  }
+} 
 
 export const Timer = (props) => {
   const time = moment().format('LT')
