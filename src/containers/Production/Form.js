@@ -72,50 +72,31 @@ class Form extends Component {
                 validate={[isRequired]}
               />
               <Field
-                name="hot_weight"
+                name="loading_weight"
                 component={renderField} 
-                label='Hot Weight' 
-                placeholder='Hot Weight' 
+                label='Loading Weight' 
+                placeholder='Loading Weight' 
                 validate={[isRequired]}
               />
               <Field
-                name="mode"
-                component={simpleSelect} 
-                selectOptions={[ {value:'bulk', name:'Bulk'}, {value:'container', name:'Container'} ]} 
-                label='Order Mode' 
-                placeholder='Select Order Mode' 
+                name="documents_weight"
+                component={renderField} 
+                label='Documents Weight' 
+                placeholder='Documents Weight' 
                 validate={[isRequired]}
               />
               <Field
-                name="flight_name"
-                component={renderField}
-                type="text" 
-                label='Flight Name' 
-                placeholder='Name of Flight' 
+                name="airline_weight"
+                component={renderField} 
+                label='Airline Weight' 
+                placeholder='Airline Weight' 
                 validate={[isRequired]}
               />
               <Field
-                name="flight_time"
-                component={Timer}
-                type="text" 
-                label='Flight Time' 
-                placeholder='Time of Flight' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="carcass_weight"
-                component={renderField}
-                type="number" 
-                label='Carcass Weight' 
-                placeholder='Weight of the Carcass' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="notes"
-                component={renderTextarea}
-                type="text" 
-                label='Notes' 
-                placeholder='Any notes regarding the order' 
+                name="customer_weight"
+                component={renderField} 
+                label='Customer Weight' 
+                placeholder='Customer Weight' 
                 validate={[isRequired]}
               />
             </div>
