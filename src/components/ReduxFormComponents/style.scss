@@ -42,3 +42,20 @@
   background-color: #89CD52;
   color: #fff;
 }
+
+.dropzoneInput {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+.dropzoneFileList {
+  & ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    & li {
+      background: #ddd;
+      margin-bottom: 5px;
+    }
+  }
+}
