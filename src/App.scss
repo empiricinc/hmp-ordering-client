@@ -7,7 +7,7 @@ body {
 footer {
 	position: fixed;
 	bottom: 0;
-	width: 100%;
+	width: 100vw;
 	background: #efefef;
 	padding: 5px 0;
 }
@@ -28,7 +28,7 @@ footer {
 	color: white;
 }
 .btn-block-fixed {
-	width: 100%;
+	width: 100vw;
 	border-radius: 0px;
 	position: fixed;
 	bottom: 0px;
