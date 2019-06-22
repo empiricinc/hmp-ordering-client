@@ -1,2 +1,4 @@
 export const API_LOADED = 'API_LOADED'
 export const API_LOADING = 'API_LOADING'
+export const SET_USER_INFO = 'SET_USER_INFO'
+export const SET_ACCESSIBLE_PATHS = 'SET_ACCESSIBLE_PATHS'
