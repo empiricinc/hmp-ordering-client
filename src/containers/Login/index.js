@@ -1,11 +1,22 @@
 import React from 'react';
 import './style.scss';
 import Form from './Form'
+import config from '../../config'
+import axios from "axios";
+import Cookies from "js-cookie";
 
 
 class Login extends React.Component {
   handleSubmit = (model) => {
-    console.log(model)
+		console.log(model)
+		axios.post(`${config.apiUrl}/auth/local`, model)
+		.then((response) => {
+			Cookies.set('hmp_auth_token', response.data.token);
+			window.location = `/`
+		})
+		.catch((error) => {
+			console.log(error);
+		})
     
   }
 	render() {
