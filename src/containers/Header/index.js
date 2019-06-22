@@ -11,6 +11,11 @@ import {
 import { Container } from 'reactstrap';
 import './style.scss'
 import Swipe from 'react-easy-swipe';
+import {connect} from 'react-redux'
+import { withRouter, Link } from 'react-router-dom';
+import Cookies from 'js-cookie'
+import axios from 'axios'
+
 
 
 
@@ -30,21 +35,20 @@ class Header extends Component {
 	}
 	
 	onSwipeStart = (event) => {
-    console.log('Start swiping...', event);
   }
  
   onSwipeMove = (position, event) => {
-    console.log(`Moved ${position.x} pixels horizontally`, event);
-    console.log(`Moved ${position.y} pixels vertically`, event);
   }
  
   onSwipeEnd = (event) => {
 		this.toggle();
-    // console.log('End swiping...', event);
   }
 
 	render () {
 		const {isOpen} = this.state;
+		const {user} = this.props;
+		console.log(user);
+		
 		return (
 	    <header>
 	    	<>
@@ -60,26 +64,36 @@ class Header extends Component {
 							</div>
 							<div className='col-4'></div>
 						</div>
-	          {/* <NavbarToggler onClick={this.toggle} />
-	          <NavbarBrand href="/">CRA Boilerplate</NavbarBrand>
-						<NavbarBrand href="/">CRA</NavbarBrand> */}
-						<Swipe
-							onSwipeStart={this.onSwipeStart}
-							onSwipeMove={this.onSwipeMove}
-							onSwipeEnd={this.onSwipeEnd}>
 	          <div className={isOpen ? 'navBarOpen' : 'navBarClose'} navbar>
 							<div className='text-center'>
 								<img className='logo' src={require('../../static/logo-hmp.png')} alt=""/>
 							</div>
-	            <Nav className="ml-auto" navbar>
-	              <NavItem className='headerNavItem'>
-	                <NavLink href="/">Home</NavLink>
-	              </NavItem>
-	              <NavItem className='headerNavItem'>
-	                <NavLink href="/about">About</NavLink>
-	              </NavItem>
-	            </Nav>
+							<Nav className="ml-auto" navbar>
+							{
+								user && user.accessiblePaths && user.accessiblePaths.map((item) => {
+									return (
+									<NavItem className='headerNavItem'>
+										<NavLink href={`${item.route}`}>{item.name}</NavLink>
+									</NavItem>)
+								})
+							}
+							{user && user.user ? <NavItem onClick={() => {
+								Cookies.remove('hmp_auth_token');
+								axios.defaults.headers.common['Authorization'] = ``
+							}
+								} className='headerNavItem'>
+										<NavLink href={`/`}>Logout</NavLink>
+							</NavItem> :
+							<NavItem className='headerNavItem'>
+								<NavLink href={`/login`}>Login</NavLink>
+							</NavItem>
+							}
+						</Nav>
 	          </div>
+						<Swipe
+							onSwipeStart={this.onSwipeStart}
+							onSwipeMove={this.onSwipeMove}
+							onSwipeEnd={this.onSwipeEnd}>
 						{isOpen ? <div onClick={this.toggle} className='backDrop'></div> : null}
 						</Swipe>
 	        </div>
@@ -89,4 +103,8 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default withRouter(connect(store => {
+	return {
+		user: store.users,
+	}
+})(Header));
