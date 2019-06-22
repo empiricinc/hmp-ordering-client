@@ -15,3 +15,21 @@ export function apiLoading(state) {
     }
   }
 }
+
+export function setUserInfo(state) {
+  if(state) {
+    return {
+      type: types.SET_USER_INFO,
+      payload: state,
+    }
+  } 
+}
+
+export function setAccessiblePaths(state) {
+  if(state) {
+    return {
+      type: types.SET_ACCESSIBLE_PATHS,
+      payload: state,
+    }
+  } 
+}
