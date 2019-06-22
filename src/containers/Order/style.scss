@@ -1,0 +1,12 @@
+.homeContainer {
+  text-align: center;
+  & .logo {
+    width: 80%;
+    height: 100px;
+    object-fit: contain;
+    margin: 20px;
+  }
+  & .form-fixed-submit {
+    margin-bottom: 60px;
+  }
+}
