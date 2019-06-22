@@ -3,7 +3,10 @@ import './style.scss';
 import Form from './Form'
 
 
-class Home extends React.Component {
+class Quarantine extends React.Component {
+	componentDidMount() {
+		console.log('rendering Quarantine')
+	}
   handleSubmit = (model) => {
     console.log(model)
     
@@ -18,7 +21,7 @@ class Home extends React.Component {
 	}
 }
 
-export default Home;
+export default Quarantine;
 
 // export default reduxForm({
 //   form: 'Bookingform'
