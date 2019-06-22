@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form';
 // import {renderField} from '../../components/ReduxFormComponents'
 
 import './style.scss';
@@ -38,7 +38,7 @@ class Form extends Component {
                 component={renderField}
                 type="text" 
                 label='First Name' 
-                placeholder='Airline' 
+                placeholder='First Name' 
                 validate={[isRequired]}
               />
               <Field
@@ -66,14 +66,6 @@ class Form extends Component {
                 validate={[isRequired]}
               />
               <Field
-                name="password"
-                component={renderField}
-                type="password" 
-                label='Password' 
-                placeholder='Password' 
-                validate={[isRequired]}
-              />
-              <Field
                 name="role"
                 component={simpleSelect}
                 type="text" 
@@ -86,17 +78,9 @@ class Form extends Component {
                 name="department"
                 component={simpleSelect}
                 type="text" 
-                label='Role'
-                selectOptions={[{value:'documnetation', name:'Documnetation'}, {value:'Quarantine', name:'quarantine'}]} 
+                label='Deaprtment'
+                selectOptions={[{value:'documnetation', name:'documnetation'}, {value:'order', name:'order'}, {value:'production', name:'production'}, {value:'stock', name:'stock'}, {value:'quarantine', name:'quarantine'},  {value:'manager', name:'manager'}]} 
                 placeholder='Role'  
-                validate={[isRequired]}
-              />
-              <Field
-                name="notes"
-                component={renderField}
-                type="text" 
-                label='Airline' 
-                placeholder='Airline' 
                 validate={[isRequired]}
               />
               
