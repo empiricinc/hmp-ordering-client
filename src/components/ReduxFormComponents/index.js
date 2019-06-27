@@ -179,7 +179,13 @@ export class FileInput extends Component {
 export const Timer = (props) => {
   const time = moment().format('LT')
   const [isTime, setTime] = useState(time)
-  props.input.onChange(isTime)  
+  const fullDate = new Date();
+// fullDate = Tue Dec 12 2017 11:18:30 GMT+0530 (IST) {}
+  // const time = '01.00 AM';
+  const d = moment(fullDate).format('L'); // d = "12/12/2017"
+  const date = moment(d +' '+ isTime).format();
+  console.log(date);
+  props.input.onChange(date)  
   return (<div className='space-4'>
     <h6 className='inputLabel text-left'>{props.label}</h6>
     <TimePicker
