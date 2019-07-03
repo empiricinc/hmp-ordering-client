@@ -5,7 +5,7 @@
   left: 0px;
   padding: 10px;
   background: white;
-  width: 60vw;
+  width: 400px;
   z-index: 2;
   -webkit-transition: left 0.5s;
 }
@@ -13,7 +13,7 @@
   position: fixed;
   height: 100vh;
   top: 0px;
-  left: -300px;
+  left: -100vw;
   padding: 10px;
   background: white;
   width: 60vw;
@@ -59,4 +59,10 @@
   background: #fafafa;
   width: 100%;
   border-bottom: 1px solid #ddd;
+}
+
+@media only screen and (max-width: 600px) {
+  .navBarOpen {
+    width: 60vw;
+  }
 }
