@@ -30,6 +30,9 @@ class Home extends React.Component {
   }
   componentWillRecieveProps(nextProps) {
   }
+  approveOrder(id) {
+    axios.put(`${config.apiUrl}/api/order/approve/${id}`)
+  }
   render() {
     const {orders} = this.state;
     const {user} = this.props;
@@ -57,7 +60,7 @@ class Home extends React.Component {
             <td>{moment(order.flight_date).format('LL')}</td>
             <td>{moment(order.date_of_delivery).format('LL')}</td>
             <td>{order.isApprove ? 'Yes' : 'No'}</td>
-            {user && user.department == 'manager' && <td><button className='button'>Approve Now</button></td>}
+            {user && user.department == 'manager' && <td><button onClick={ () => {this.approveOrder(order._id)} } className='button'>Approve Now</button></td>}
           </tr>
         })
       }
