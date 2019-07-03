@@ -14,8 +14,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticating: true,
-      authenticated: false,
+      authenticating: false,
+      authenticated: true,
     }
   }
   componentDidMount() {
@@ -24,42 +24,42 @@ class Home extends React.Component {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     axios.get(`${config.apiUrl}/api/users/me`)
     .then((response) => {
-    const {data} = response;
-    const {location} = this.props;
-    if(data.department == 'manager') {
-      this.props.dispatch(setUserInfo(data));
-      this.props.dispatch(
-        setAccessiblePaths([
-          {name: 'Order Dashboard', route: '/order/dashboard' },
-          {name: 'Production Dashboard', route: '/production/dashboard' },
-          {name: 'Documentation Dashboard', route: '/documentation/dashboard' },
-          {name: 'Quarantine Dashboard', route: '/quarantine/dashboard' },
-          {name: 'Stock Dashboard', route: '/stock/dashboard' }
-          ]
-        )
-      )
+    // const {data} = response;
+    // const {location} = this.props;
+    // if(data.department == 'manager') {
+    //   this.props.dispatch(setUserInfo(data));
+    //   this.props.dispatch(
+    //     setAccessiblePaths([
+    //       {name: 'Order Dashboard', route: '/order/dashboard' },
+    //       {name: 'Production Dashboard', route: '/production/dashboard' },
+    //       {name: 'Documentation Dashboard', route: '/documentation/dashboard' },
+    //       {name: 'Quarantine Dashboard', route: '/quarantine/dashboard' },
+    //       {name: 'Stock Dashboard', route: '/stock/dashboard' }
+    //       ]
+    //     )
+    //   )
 
-      if (location.pathname.split('/').indexOf('dashboard') > -1) {
-        this.setState({authenticating: false, authenticated: true, user: data});
-      } else {
-        history.push(`order/dashboard`)
-        this.setState({authenticating: false, authenticated: true, user: data});
-      }
-    } else {
-      var formPathName = `/${data.department}`
-      var dashPathName = `/${data.department}/dashboard`
-      this.props.dispatch(setAccessiblePaths([{name: 'Add New', route: formPathName }, {name: 'Dashboard', route: dashPathName }]))
-      this.setState({authenticating: false, authenticated: true, user: data});
-      if(!user) {
-        this.props.dispatch(setUserInfo(data));
-        if(location.pathname != formPathName && location.pathname != dashPathName) {
-          history.push(`/${data.department}`)
-        } else {
-          history.push(location.pathname)
-        }
+    //   if (location.pathname.split('/').indexOf('dashboard') > -1) {
+    //     this.setState({authenticating: false, authenticated: true, user: data});
+    //   } else {
+    //     history.push(`order/dashboard`)
+    //     this.setState({authenticating: false, authenticated: true, user: data});
+    //   }
+    // } else {
+    //   var formPathName = `/${data.department}Form`
+    //   var dashPathName = `/${data.department}/dashboard`
+    //   this.props.dispatch(setAccessiblePaths([{name: 'Add New', route: formPathName }, {name: 'Dashboard', route: dashPathName }]))
+    //   this.setState({authenticating: false, authenticated: true, user: data});
+    //   if(!user) {
+    //     this.props.dispatch(setUserInfo(data));
+    //     if(location.pathname.indexOf(formPathName) == -1 && location.pathname != dashPathName) {
+    //       history.push(`/${data.department}/dashboard`)
+    //     } else {
+    //       history.push(location.pathname)
+    //     }
         
-      }
-    }
+    //   }
+    // }
     })
     .catch((error) => {
       if(location.pathname != '/signup') {
