@@ -16,6 +16,7 @@ const ProductionDashboard = React.lazy(() => import('./containers/ProductionDash
 const Stock = React.lazy(() => import('./containers/Stock'));
 const StockDashboard = React.lazy(() => import('./containers/StockDashboard'));
 const Signup = React.lazy(() => import('./containers/Signup'));
+const DetailsContainer = React.lazy(() => import('./containers/DetailsContainer'));
 const PageNotFound = React.lazy(() => import('./containers/PageNotFound'));
 
 export default (
@@ -26,15 +27,16 @@ export default (
       <Route exact path="/order/dashboard" component={OrderDashboard}/>
       {/* <Route exact path="/login" component={Login}/> */}
       <Route exact path="/about" component={About}/>
-      <Route exact path="/documentation" component={Documentation}/>
+      <Route exact path="/documentationForm/:id" component={Documentation}/>
       <Route exact path="/documentation/dashboard" component={DocumentationDashboard}/>
-      <Route exact path="/quarantine" component={Quarantine}/>
+      <Route exact path="/quarantineForm/:id" component={Quarantine}/>
       <Route exact path="/quarantine/dashboard" component={QuarantineDashboard}/>
-      <Route exact path="/production" component={Production}/>
+      <Route exact path="/productionForm/:id" component={Production}/>
       <Route exact path="/production/dashboard" component={ProductionDashboard}/>
-      <Route exact path="/signup" component={Signup}/>
-      <Route exact path="/stock" component={Stock}/>
+      <Route exact path="/stockForm/:id" component={Stock}/>
       <Route exact path="/stock/dashboard" component={StockDashboard}/>
+      <Route exact path="/details/:department/:id" component={DetailsContainer}/>
+      <Route exact path="/signup" component={Signup}/>
       <Route exact path='*' component={PageNotFound} />
     </Switch>
   </Suspense>
