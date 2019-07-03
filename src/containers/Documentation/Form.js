@@ -9,22 +9,7 @@ import { renderField, isRequired, FileInput, Timer } from '../../components/Redu
 
 class Form extends Component {
   handleSubmit = (model) => {
-    console.log(model)
-    let images = [];
-    model.file.forEach((file) => {
-
-      const reader = new FileReader();
-      reader.onload = () => {
-          const fileAsBase64 = reader.result.substr(reader.result.indexOf(",") + 1);
-          images.push(fileAsBase64);
-      };
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-
-      reader.readAsDataURL(file);
-  });
-  console.log(images);
+    
   }
 	render() {
 		return (
@@ -34,36 +19,36 @@ class Form extends Component {
             <div className='form-fixed-submit'>
               <h5>Flight Information</h5>
               <Field
-                name="notes"
+                name="booking_airline"
                 component={renderField}
                 type="text" 
                 label='Airline' 
                 placeholder='Airline' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
-              <Field
+              {/* <Field
                 name="flight_name"
                 component={renderField}
                 type="text" 
                 label='Flight Name' 
                 placeholder='Name of Flight' 
-                validate={[isRequired]}
-              />
+                //validate={[isRequired]}
+              /> */}
               <Field
-                name="flight_time"
+                name="booking_time"
                 component={Timer}
                 type="text" 
                 label='Flight Time' 
                 placeholder='Time of Flight' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               <Field
-                name="flight_location"
+                name="booking_location"
                 component={renderField}
                 type="text" 
                 label='Flight Location' 
                 placeholder='Location of Flight' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               <Field
                 name="halal_certificate"
@@ -71,23 +56,32 @@ class Form extends Component {
                 type="file" 
                 label='Halal Certificate' 
                 placeholder='Halal Certificate' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
+
+              {/* <Field
+                name="halal_certificate"
+                component={FileInput}
+                type="file" 
+                label='Halal Certificate' 
+                placeholder='Halal Certificate' 
+                //validate={[isRequired]}
+              /> */}
               <Field
-                name="invoice"
+                name="invoice_generation"
                 component={FileInput}
                 type="file" 
                 label='Invoice' 
                 placeholder='Invoice' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               <Field
-                name="date"
+                name="doc_creation_date"
                 component={renderField}
                 type="date" 
                 label='Date of delivery' 
                 placeholder='Date of Delivery' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               <Field
                 name="form_e"
@@ -95,7 +89,15 @@ class Form extends Component {
                 type="file" 
                 label='Form-E' 
                 placeholder='Form E' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
+              />
+              <Field
+                name="certificate_of_origin"
+                component={FileInput}
+                type="file" 
+                label='Certificate of Origin' 
+                placeholder='Certificate of Origin' 
+                //validate={[isRequired]}
               />
               <Field
                 name="driver_name"
@@ -103,7 +105,7 @@ class Form extends Component {
                 type="text" 
                 label='Driver Name' 
                 placeholder='Name of Driver' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               <Field
                 name="delivery_time"
@@ -111,7 +113,7 @@ class Form extends Component {
                 type="text" 
                 label='Delivery Time' 
                 placeholder='Time of Delivery' 
-                validate={[isRequired]}
+                //validate={[isRequired]}
               />
               
             </div>
