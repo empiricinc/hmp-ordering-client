@@ -8,6 +8,13 @@ import { renderField, isRequired, simpleSelect, Timer, renderTextarea } from '..
 
 
 class Form extends Component {
+  componentDidMount() {
+    
+  }
+  componentWillReceiveProps(nextProps) {
+    // this.props.initialize(nextProps.initialState)
+  }
+  
   handleSubmit = (model) => {
     console.log(model)
   }
@@ -35,22 +42,14 @@ class Form extends Component {
                 validate={[isRequired]}
               />
               <Field
-                name="packing_information"
+                name="packaging"
                 component={renderField} 
                 label='Packing Information' 
                 placeholder='Packing information' 
                 validate={[isRequired]}
               />
               <Field
-                name="vehicle_availibility"
-                component={simpleSelect} 
-                selectOptions={[{value: true, name:'Yes'}, {value: false, name:'No'} ]} 
-                label='Vehicle Availibility' 
-                placeholder='Vehicle Availibility' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="vehicle_availibility_time"
+                name="time"
                 component={Timer}
                 type="text" 
                 label='Time of vehicle availibility' 
@@ -58,7 +57,15 @@ class Form extends Component {
                 validate={[isRequired]}
               />
               <Field
-                name="vehicle_info"
+                name="vehicle_availability"
+                component={simpleSelect} 
+                selectOptions={[{value: true, name:'Yes'}, {value: false, name:'No'} ]} 
+                label='Vehicle Availibility' 
+                placeholder='Vehicle Availibility' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="vehicle_information"
                 component={renderField} 
                 label='Vehicle Info' 
                 placeholder='Vehicle info' 
