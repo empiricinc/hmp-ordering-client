@@ -91,7 +91,7 @@ export const simpleSelect = ({ type, label, input, min, selectOptions = [], plac
   const dateProps = type == 'date' ? { min, max } : null;
   return (<div className='inputform space-4'>
     <h6 className='inputLabel text-left'>{label}</h6>
-    <select  onChange={(e) => {input.onChange(e.target.value)}}  className='selectFormInput'>
+    <select value={input.value} onChange={(e) => {input.onChange(e.target.value)}}  className='selectFormInput'>
       <option value={null}> {placeholder} </option>
       {selectOptions.map((item) => {
           return <option value={item.value}> {item.name} </option>
@@ -178,14 +178,19 @@ export class FileInput extends Component {
 
 export const Timer = (props) => {
   const time = moment().format('LT')
-  const [isTime, setTime] = useState(time)
+  const [isTime, setTime] = useState(new Date(props.input.value))
   const fullDate = new Date();
+
+  // if(props.input.value) {
+  //   // moment(props.input.value).format()
+  //   let newDate = new Date(props.input.value);
+  //   setTime(newDate);
+  // }
 // fullDate = Tue Dec 12 2017 11:18:30 GMT+0530 (IST) {}
   // const time = '01.00 AM';
-  const d = moment(fullDate).format('L'); // d = "12/12/2017"
-  const date = moment(d +' '+ isTime).format();
-  console.log(date);
-  props.input.onChange(date)  
+  // const d = moment(fullDate).format('L'); // d = "12/12/2017"
+  // const date = moment(d +' '+ isTime).format();
+  // console.log(date);
   return (<div className='space-4'>
     <h6 className='inputLabel text-left'>{props.label}</h6>
     <TimePicker
@@ -198,7 +203,10 @@ export const Timer = (props) => {
           // console.log(ev);
           // console.log('from moment',setTime(moment(`${ev.hour}:${ev.minute} ${ev.meridiem}`).format('LT'))); 
           let time = ev.hour+':'+ev.minute + ' ' + ev.meridiem;
-          setTime(time)}
+          setTime(time)
+          console.log(moment(moment(fullDate).format('L') +' '+ time).format())
+          props.input.onChange(moment(moment(fullDate).format('L') +' '+ time).format())  
+        }
         }
       timeMode="12"
       timezone="Asia/Karachi"
