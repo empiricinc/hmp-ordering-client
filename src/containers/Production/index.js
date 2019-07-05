@@ -23,6 +23,10 @@ class ProductionForm extends React.Component {
 			model.vehicle_availability = true;
 		}
 		axios.put(`${config.apiUrl}/api/production_dept/${this.orderId}`, model)
+		.then(() => {
+			window.alert('resources added successfully');
+			window.location = '/production/dashboard'
+		})
 	}
 	componentDidMount() {
 		const {match} = this.props;
