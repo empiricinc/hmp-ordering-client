@@ -74,7 +74,7 @@ class Form extends Component {
                 validate={[isRequired]}
               /> */}
               <Field
-                name="carcass_weight"
+                name="carcase_weight"
                 component={renderField}
                 type="number" 
                 label='Carcass Weight (KGs)' 
