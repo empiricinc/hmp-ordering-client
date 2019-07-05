@@ -4,7 +4,21 @@ import 'react-times/css/classic/default.css';
 import './style.scss'
 import moment from 'moment'
 import Dropzone from 'react-dropzone';
+import {Field} from 'redux-form'
 
+function validURL(str) {
+  if(typeof(str) == 'string') {
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }else {
+    return false
+  }
+}
 
 export const normalizeCnic = (value) => {
   if (!value) {
@@ -63,7 +77,11 @@ export const disabledField = ({ type, label, input, meta: { touched, error } }) 
 export const renderField = ({ type, label, input, min, placeholder, max, meta: { touched, error } }) => {
 
   const dateProps = type == 'date' ? { min, max } : null
-
+  if(type == 'date') {
+    delete input.value;
+    dateProps.value = moment(input.value).format('YYYY-MM-DD')
+  }
+  // console.log('dateValue',input.value)
   return (<div className='inputform space-4'>
     <h6 className='inputLabel text-left'>{label}</h6>
     <input className='selectFormInput' {...dateProps} {...input} type={type} placeholder={placeholder} autoComplete='off' ></input>
@@ -140,10 +158,18 @@ export const renderDropzoneInput = (field) => {
 export class FileInput extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      valueProvided: false,
+    }
+  }
+  componentDidMount() {
+    if(validURL(this.props.input.value)) {
+      this.setState({
+        valueProvided: true,
+      })
+    }
   }
   fileToBase64 (filesList) {
-    /// logic
-    // console.log(value.target.files);
     var base64ImgArray = [];
     for (var i = 0; i < filesList.length; i++) {
       var reader = new FileReader();
@@ -156,41 +182,70 @@ export class FileInput extends Component {
         console.log('Error: ', error);
       };
     }
-    // var base64ImgArray = filesList.map((file, index) => {
-    // })
-
     console.log(base64ImgArray);
     this.props.input.onChange(base64ImgArray)
-
   }
   render() {
     const { multi, label } = this.props;
+    const { valueProvided } = this.state;
     return (
       <div>
         <h6 className='inputLabel text-left'>{label}</h6>
         <div className='dropzoneInput'>
-          <input multiple={multi} onChange ={ (value) => { this.fileToBase64(value.target.files) }} type='file'/>
+          {
+            valueProvided ?
+              <div>
+                <React.Fragment>
+                  <a style={{margin: '10px'}} href={this.props.input.value} target="_blank">Download</a>
+                  <a onClick={(e) => {e.preventDefault(); this.setState({valueProvided:false})}} style={{margin: '10px', color:'#ef5350'}}>Upload another</a>
+                </React.Fragment>
+              </div> :
+             <input multiple={multi} onChange ={ (value) => { this.fileToBase64(value.target.files) }} type='file'/>
+          }
         </div>
       </div>
     )
   }
 } 
 
+export const renderAnimals = ({ fields }) => {
+  return (
+    <div>
+      <h3 className='space-4'>Animals Informatiom</h3>
+      {fields.map((animal, index) => (
+        <div>
+          <h6 className='inputLabel text-left'>Animal Type</h6>
+          <Field name={`${animal}.type`} key={index} component={renderField} />
+          <h6 className='inputLabel text-left'>Animal Tag</h6>
+          <Field
+            name={`${animal}.tag`}
+            key={`${index} + a`}
+            component={renderField}
+          />
+          <h6 className='inputLabel text-left'>Animal Weight</h6>
+          <Field
+            name={`${animal}.weight`}
+            key={`${index} + b`}
+            component={renderField}
+          />
+          <hr/>
+        <hr/>
+        </div>
+      ))}
+      <button type="button" onClick={() => fields.push()}>
+        Add more
+      </button>
+      {fields.length ? <button type="button" onClick={() => fields.pop()}>
+        Remove Last
+      </button> : null}
+    </div>
+  );
+};
+
 export const Timer = (props) => {
   const time = moment().format('LT')
-  const [isTime, setTime] = useState(new Date(props.input.value))
-  const fullDate = new Date();
-
-  // if(props.input.value) {
-  //   // moment(props.input.value).format()
-  //   let newDate = new Date(props.input.value);
-  //   setTime(newDate);
-  // }
-// fullDate = Tue Dec 12 2017 11:18:30 GMT+0530 (IST) {}
-  // const time = '01.00 AM';
-  // const d = moment(fullDate).format('L'); // d = "12/12/2017"
-  // const date = moment(d +' '+ isTime).format();
-  // console.log(date);
+  console.log(time);
+  const [isTime, setTime] = useState(props.input.value || time)
   return (<div className='space-4'>
     <h6 className='inputLabel text-left'>{props.label}</h6>
     <TimePicker
@@ -204,9 +259,8 @@ export const Timer = (props) => {
           // console.log('from moment',setTime(moment(`${ev.hour}:${ev.minute} ${ev.meridiem}`).format('LT'))); 
           let time = ev.hour+':'+ev.minute + ' ' + ev.meridiem;
           setTime(time)
-          console.log(moment(moment(fullDate).format('L') +' '+ time).format())
-          props.input.onChange(moment(moment(fullDate).format('L') +' '+ time).format())  
-        }
+          props.input.onChange(time)
+          }
         }
       timeMode="12"
       timezone="Asia/Karachi"
