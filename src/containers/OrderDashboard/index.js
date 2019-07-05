@@ -9,6 +9,7 @@ import config from "../../config";
 import { setUserInfo } from '../../actions/users'
 import { connect } from "react-redux";
 import moment from 'moment'
+import './style.scss'
 
 
 class Home extends React.Component {
@@ -37,12 +38,13 @@ class Home extends React.Component {
     const {orders} = this.state;
     const {user} = this.props;
     return(
-    <div class="table-responsive">          
+    <div class="orderDashWrapper table-responsive">          
   <table class="table">
     <thead>
       <tr>
         <th>Product</th>
         <th>Order Mode</th>
+        <th>Carcass Weight</th>
         <th>Mode of Delivery</th>
         <th>Date of flight</th>
         <th>Date of delivery</th>
@@ -56,6 +58,7 @@ class Home extends React.Component {
           return <tr>
             <td>{order.product_type}</td>
             <td>{order.mode}</td>
+            <td>{order.carcase_weight}</td>
             <td>{order.mode_of_delivery}</td>
             <td>{moment(order.flight_date).format('LL')}</td>
             <td>{moment(order.date_of_delivery).format('LL')}</td>
