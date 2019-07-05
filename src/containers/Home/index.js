@@ -24,10 +24,10 @@ class Home extends React.Component {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     axios.get(`${config.apiUrl}/api/users/me`)
     .then((response) => {
-    // const {data} = response;
+    const {data} = response;
     // const {location} = this.props;
     // if(data.department == 'manager') {
-    //   this.props.dispatch(setUserInfo(data));
+      this.props.dispatch(setUserInfo(data));
     //   this.props.dispatch(
     //     setAccessiblePaths([
     //       {name: 'Order Dashboard', route: '/order/dashboard' },
