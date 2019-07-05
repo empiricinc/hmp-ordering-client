@@ -34,6 +34,10 @@ export default (
       <Route exact path="/productionForm/:id" component={Production}/>
       <Route exact path="/production/dashboard" component={ProductionDashboard}/>
       <Route exact path="/stockForm/:id" component={Stock}/>
+      <Route exact path="/stockForm" component={Stock}/>
+      <Route exact path="/stock/dashboard" component={StockDashboard}/>
+      <Route exact path="/orderForm/:id" component={Stock}/>
+      <Route exact path="/orderForm" component={Stock}/>
       <Route exact path="/stock/dashboard" component={StockDashboard}/>
       <Route exact path="/details/:department/:id" component={DetailsContainer}/>
       <Route exact path="/signup" component={Signup}/>
