@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, FieldArray } from 'redux-form'
+import config from "../../config";
+import axios from "axios";
+
 // import {renderField} from '../../components/ReduxFormComponents'
 
 import './style.scss';
-import { renderField, isRequired, simpleSelect, Timer, renderTextarea } from '../../components/ReduxFormComponents';
+import { renderField, isRequired, simpleSelect, Timer, renderTextarea, FileInput, renderAnimals } from '../../components/ReduxFormComponents';
 
 
 class Form extends Component {
   handleSubmit = (model) => {
-    console.log(model)
   }
 	render() {
 		return (
@@ -17,88 +19,57 @@ class Form extends Component {
 				<Container>
           <form onSubmit={this.props.handleSubmit}>
             <div className='form-fixed-submit'>
-              
               <Field
-                name="man_power"
+                name="name"
                 component={renderField}
-                type="number" 
-                label='Man Power' 
-                placeholder='Man Power' 
-                validate={[isRequired]}
-              />
-
-              <Field
-                name="chilling_capacity"
-                component={renderField} 
-                label='Chilling Capactiy' 
-                placeholder='Chilling Capacity' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="packing_information"
-                component={renderField} 
-                label='Packing Information' 
-                placeholder='Packing information' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="vehicle_availibility"
-                component={simpleSelect} 
-                selectOptions={[{value: true, name:'Yes'}, {value: false, name:'No'} ]} 
-                label='Vehicle Availibility' 
-                placeholder='Vehicle Availibility' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="vehicle_availibility_time"
-                component={Timer}
                 type="text" 
-                label='Time of vehicle availibility' 
-                placeholder='Time' 
+                label='Name' 
+                placeholder='Name' 
                 validate={[isRequired]}
               />
               <Field
-                name="vehicle_info"
-                component={renderField} 
-                label='Vehicle Info' 
-                placeholder='Vehicle info' 
+                name="vehicle"
+                component={renderField}
+                type="text" 
+                label='Vehicle No.' 
+                placeholder='Vehicle No.' 
                 validate={[isRequired]}
               />
               <Field
-                name="hot_weight"
-                component={renderField} 
-                label='Hot Weight' 
-                placeholder='Hot Weight' 
+                name="mandi"
+                component={renderField}
+                type="text" 
+                label='Name of Mandi'
+                placeholder='Name of Mandi'  
                 validate={[isRequired]}
               />
               <Field
-                name="loading_weight"
-                component={renderField} 
-                label='Loading Weight' 
-                placeholder='Loading Weight' 
+                name="procured_by"
+                component={renderField}
+                type="text" 
+                label='Procured By'
+                placeholder='Procured By'  
                 validate={[isRequired]}
               />
               <Field
-                name="documents_weight"
-                component={renderField} 
-                label='Documents Weight' 
-                placeholder='Documents Weight' 
-                validate={[isRequired]}
+                name="grn"
+                component={renderField}
+                type="text" 
+                label='GRN'
+                placeholder='GRN'  
               />
               <Field
-                name="airline_weight"
-                component={renderField} 
-                label='Airline Weight' 
-                placeholder='Airline Weight' 
-                validate={[isRequired]}
+                name="total_animals"
+                component={renderField}
+                type="text" 
+                label='Total Animals'
+                placeholder='Total No. of Animals'  
               />
-              <Field
-                name="customer_weight"
-                component={renderField} 
-                label='Customer Weight' 
-                placeholder='Customer Weight' 
-                validate={[isRequired]}
-              />
+              <FieldArray
+                name={'animals'}
+                component={renderAnimals}
+                />
+              
             </div>
             <button className='btn-block-fixed btn-hmp-red' type='submit'>Submit</button>
           </form>
@@ -108,5 +79,5 @@ class Form extends Component {
 	}
 }
 export default reduxForm({
-  form: 'Bookingform'
+  form: 'Bookingform',
 })(Form)
