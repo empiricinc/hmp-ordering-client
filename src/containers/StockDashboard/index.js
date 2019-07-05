@@ -1,37 +1,81 @@
 import React from "react";
-import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
 import { withRouter } from 'react-router-dom';
 // import store, { history } from './configureStore';
 import axios from "axios";
-import Cookies from 'js-cookie'
 import config from "../../config";
-import { setUserInfo } from '../../actions/users'
 import { connect } from "react-redux";
+import moment from 'moment'
+import './style.scss'
 
 
-class Home extends React.Component {
+class QuarantineDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       authenticating: true,
       authenticated: false,
+      orders: [],
     }
   }
   componentDidMount() {
+    axios.get(`${config.apiUrl}/api/stock?status=pending`)
+    .then((response) => {
+      this.setState({
+        orders: response.data
+      })
+    })
   }
   componentWillRecieveProps(nextProps) {
   }
-  render() {
+  addResources(id) {
+    // console.log(this.props);
+    this.props.history.push(`/quarantineForm/${id}`)
 
-    const { authenticated, authenticating } = this.state;
-    if( authenticated && !authenticating ) {
-      return (
-        <div>Dashboad</div>
-      )
-    } else {
-      return <div>Dashboad</div>
-    }
+  }
+  showDetails(id, department) {
+    // console.log(this.props);
+    this.props.history.push(`/details/${department}/${id}`)
+
+  }
+  completeQuarantine(id) {
+    axios.put(`${config.apiUrl}/api/doc_team/${id}`, {status: 'complete'})
+  }
+  rejectQuarantine(id) {
+    axios.put(`${config.apiUrl}/api/doc_team/${id}`, {status: 'rejected'})
+  }
+  render() {
+    const {orders} = this.state;
+    const {user} = this.props;
+    return(
+    <div class="quarantineDashWrapper table-responsive table-striped">          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>GRN</th>
+        <th>Mandi</th>
+        <th>Procured By</th>
+        <th>Total Animals</th>
+        <th>Added on</th>
+        <th>View Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        orders.map((order, index) => {
+          return <tr>
+            <td>{order.grn}</td>
+            <td>{order.mandi}</td>
+            <td>{order.procured_by}</td>
+            <td>{order.total_animals}</td>
+            <td>{moment(order.createdAt).format('LL')}</td>
+            <td><button onClick={() => this.showDetails(order._id, 'stock')}>View Details</button></td>
+          </tr>
+        })
+      }
+    </tbody>
+  </table>
+  </div>
+  )
   }
 }
 
@@ -40,4 +84,4 @@ export default withRouter(connect(store => {
   return{
     user: store.users.user,
   }
-})(Home))
+})(QuarantineDashboard))
