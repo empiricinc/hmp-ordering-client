@@ -31,7 +31,6 @@ class Form extends Component {
                 type="number" 
                 label='Man Power' 
                 placeholder='Man Power' 
-                validate={[isRequired]}
               />
 
               <Field
@@ -39,14 +38,12 @@ class Form extends Component {
                 component={renderField} 
                 label='Chilling Capactiy' 
                 placeholder='Chilling Capacity' 
-                validate={[isRequired]}
               />
               <Field
                 name="packaging"
                 component={renderField} 
                 label='Packing Information' 
                 placeholder='Packing information' 
-                validate={[isRequired]}
               />
               <Field
                 name="time"
@@ -54,7 +51,6 @@ class Form extends Component {
                 type="text" 
                 label='Time of vehicle availibility' 
                 placeholder='Time' 
-                validate={[isRequired]}
               />
               <Field
                 name="vehicle_availability"
@@ -62,49 +58,48 @@ class Form extends Component {
                 selectOptions={[{value: true, name:'Yes'}, {value: false, name:'No'} ]} 
                 label='Vehicle Availibility' 
                 placeholder='Vehicle Availibility' 
-                validate={[isRequired]}
               />
               <Field
                 name="vehicle_information"
                 component={renderField} 
                 label='Vehicle Info' 
                 placeholder='Vehicle info' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
               <Field
                 name="hot_weight"
                 component={renderField} 
                 label='Hot Weight' 
                 placeholder='Hot Weight' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
               <Field
                 name="loading_weight"
                 component={renderField} 
                 label='Loading Weight' 
                 placeholder='Loading Weight' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
               <Field
                 name="documents_weight"
                 component={renderField} 
                 label='Documents Weight' 
                 placeholder='Documents Weight' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
               <Field
                 name="airline_weight"
                 component={renderField} 
                 label='Airline Weight' 
                 placeholder='Airline Weight' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
               <Field
                 name="customer_weight"
                 component={renderField} 
                 label='Customer Weight' 
                 placeholder='Customer Weight' 
-                validate={[isRequired]}
+                // validate={[isRequired]}
               />
             </div>
             <button className='btn-block-fixed btn-hmp-red' type='submit'>Submit</button>
