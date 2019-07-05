@@ -7,11 +7,19 @@ import { connect } from "react-redux";
 import axios from "axios";
 import config from "../../config";
 import { promised } from 'q';
-
-const instance = axios.create({
-	baseURL: 'https://api.cloudinary.com/v1_1/hmp/image/upload',
-	timeout: 1000000,
-});
+function validURL(str) {
+  if(typeof(str) == 'string') {
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }else {
+    return false
+  }
+}
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
@@ -25,13 +33,15 @@ class Home extends React.Component {
 	
   handleSubmit = (model) => {
 		console.log(model)
-		delete model.halal_certificate;
-		delete model.invoice_generation;
-		delete model.form_e;
-		const filesToUpload = [{name: 'halal_certificate' , file:model.halal_certificate}, {name: 'invoice_generation' , file:model.invoice_generation},{name: 'form_e' , file:model.form_e},];
+		const filesToUpload = [
+			{name: 'halal_certificate' , file:model.halal_certificate},
+			 {name: 'invoice_generation' , file:model.invoice_generation},
+			 {name: 'form_e' , file:model.form_e},
+			 {name: 'certificate_of_origin' , file:model.certificate_of_origin},
+			];
 		var filesUrls = {};
 		const uploaders = filesToUpload.map((file) => {
-			if(file.file) {
+			if(file.file && !validURL(file.file)) {
 					let params = new URLSearchParams();
 					params.append('upload_preset', 'iawxhtp4')
 					params.append('api_key', config.apiKey,)
@@ -47,6 +57,7 @@ class Home extends React.Component {
 				})
 					.then((response) => {
 						console.log('single response', response);
+						delete model[file.name];
 						return filesUrls[file.name] = response.data.secure_url
 					})
 			} else {
@@ -56,7 +67,11 @@ class Home extends React.Component {
 		})
 		axios.all(uploaders)
 		.then(response => {
-			axios.put(`${config.apiUrl}/api/doc_team/${this.orderId}`, model)
+			axios.put(`${config.apiUrl}/api/doc_team/${this.orderId}`, {...model, ...filesUrls})
+			.then(() => {
+				window.alert('resources added successfully');
+				window.location = '/documentation/documentation'
+			})
 			console.log('all response', response)
 		})
 		.catch()
