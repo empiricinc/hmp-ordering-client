@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { Field, reduxForm } from 'redux-form'
+import config from "../../config";
+import axios from "axios";
+
 // import {renderField} from '../../components/ReduxFormComponents'
 
 import './style.scss';
@@ -9,22 +12,6 @@ import { renderField, isRequired, simpleSelect, Timer, renderTextarea, FileInput
 
 class Form extends Component {
   handleSubmit = (model) => {
-    console.log(model)
-    let images = [];
-    model.file.forEach((file) => {
-
-      const reader = new FileReader();
-      reader.onload = () => {
-          const fileAsBase64 = reader.result.substr(reader.result.indexOf(",") + 1);
-          images.push(fileAsBase64);
-      };
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-
-      reader.readAsDataURL(file);
-  });
-  console.log(images);
   }
 	render() {
 		return (
@@ -33,15 +20,15 @@ class Form extends Component {
           <form onSubmit={this.props.handleSubmit}>
             <div className='form-fixed-submit'>
               <Field
-                name="date"
+                name="date_of_quarantine"
                 component={renderField}
                 type="date" 
-                label='Date of delivery' 
-                placeholder='Date of Delivery' 
+                label='Date of Quarantine' 
+                placeholder='Date of Quarantine' 
                 validate={[isRequired]}
               />
               <Field
-                name="quarantine_proof_documents"
+                name="proof_doc"
                 component={FileInput}
                 type="file" 
                 label='Quarantine Proof Documents' 
@@ -49,7 +36,7 @@ class Form extends Component {
                 validate={[isRequired]}
               />
               <Field
-                name="quarantine_department_type"
+                name="department"
                 component={simpleSelect}
                 type="text" 
                 label='Quarantine Department Type'
