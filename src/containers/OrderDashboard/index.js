@@ -22,7 +22,7 @@ class Home extends React.Component {
     }
   }
   componentDidMount() {
-    axios.get(`${config.apiUrl}/api/order`)
+    axios.get(`${config.apiUrl}/api/order?isApprove=true`)
     .then((response) => {
       this.setState({
         orders: response.data
@@ -30,7 +30,7 @@ class Home extends React.Component {
     })
   }
   fetchNew () {
-    axios.get(`${config.apiUrl}/api/order`)
+    axios.get(`${config.apiUrl}/api/order?isApprove=true`)
     .then((response) => {
       this.setState({
         orders: response.data
@@ -57,7 +57,7 @@ class Home extends React.Component {
     const {orders} = this.state;
     const {user} = this.props;
     return(
-    <div class="orderDashWrapper table-responsive">          
+    <div class="orderDashWrapper  table-responsive table-striped">          
   <table class="table">
     <thead>
       <tr>
@@ -67,22 +67,35 @@ class Home extends React.Component {
         <th>Mode of Delivery</th>
         <th>Date of flight</th>
         <th>Date of delivery</th>
-        <th>Approved</th>
-        {user && user.department == 'manager' && <th>Actions</th>}
+        <th>Production Status</th>
+        <th>Documentation Status</th>
+        <th>Quarantine Status</th>
+        {/* <th>Approved</th> */}
+        {/* {user && user.department == 'manager' && <th>Actions</th>} */}
       </tr>
     </thead>
     <tbody>
       {
         orders.map((order, index) => {
           return <tr>
-            <td>{order.product_type}</td>
+            <td>{
+                      order.order_items.map((item,index) => {
+                        return <div>
+                          <h6>{item.item}</h6>
+                          <p>{item.carcass_weight} KGs</p>
+                        </div>
+                    })
+                    }</td>
             <td>{order.mode}</td>
             <td>{order.carcase_weight}</td>
             <td>{order.mode_of_delivery}</td>
             <td>{moment(order.flight_date).format('LL')}</td>
             <td>{moment(order.date_of_delivery).format('LL')}</td>
-            <td>{order.isApprove ? 'Yes' : 'No'}</td>
-            {user && user.department == 'manager' && 
+            <td>{order.production_team.status}</td>
+            <td>{order.documentation_team.status}</td>
+            <td>{order.quarantine_team.status}</td>
+            {/* <td>{order.isApprove ? 'Yes' : 'No'}</td> */}
+            {/* {user && user.department == 'manager' && 
             <td>
               <button onClick={ () => {this.approveOrder(order._id)} } className='button'>
                 Approve 
@@ -91,7 +104,7 @@ class Home extends React.Component {
                 Reject
               </button>
             </td>
-            }
+            } */}
           </tr>
         })
       }
