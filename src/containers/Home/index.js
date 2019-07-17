@@ -64,7 +64,7 @@ class Home extends React.Component {
     .catch((error) => {
       if(location.pathname != '/signup') {
         this.setState({authenticating: false, authenticated: false})
-        history.push(`/login`)
+        // history.push(`/login`)
       } else {
         this.setState({authenticating: false, authenticated: true})
       }
