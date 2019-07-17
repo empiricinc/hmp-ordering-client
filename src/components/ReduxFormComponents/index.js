@@ -242,6 +242,40 @@ export const renderAnimals = ({ fields }) => {
   );
 };
 
+export const renderOrderType = ({ fields }) => {
+  return (
+    <div>
+      <h3 className='text-left'>Order Details</h3>
+      {fields.map((product, index) => (
+        <div>
+          <h6 className='inputLabel text-left'>Product Type</h6>
+          <Field 
+          name={`${product}.item`}
+          key={index}
+          placeholder='Select Product Type' 
+          component={simpleSelect}
+          selectOptions={[{value:'mutton', name:'Mutton'}, {value:'beef', name:'Beef'}, {value:'chicken', name:'chicken'} ]} 
+          />
+          <h6 className='inputLabel text-left'>Carcass Weight</h6>
+          <Field
+            name={`${product}.carcass_weight`}
+            key={`${index} + b`}
+            component={renderField}
+          />
+          {/* <hr/> */}
+        <hr/>
+        </div>
+      ))}
+      <button type="button" onClick={() => fields.push()}>
+        Add products
+      </button>
+      {fields.length ? <button type="button" onClick={() => fields.pop()}>
+        Remove Last
+      </button> : null}
+    </div>
+  );
+};
+
 export const Timer = (props) => {
   const time = moment().format('LT')
   console.log(time);
