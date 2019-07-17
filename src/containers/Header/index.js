@@ -16,7 +16,36 @@ import { withRouter, Link } from 'react-router-dom';
 import Cookies from 'js-cookie'
 import axios from 'axios'
 
-
+const routes = [
+	{
+		name: 'New Order',
+		routes: '/order'
+	},
+	{
+		name: 'Order Dashboard',
+		routes: '/order/dashboard'
+	},
+	{
+		name: 'Documentation Dashboard',
+		routes: '/documentation/dashboard'
+	},
+	{
+		name: 'Production Dashboard',
+		routes: '/production/dashboard'
+	},
+	{
+		name: 'Quarantine Dashboard',
+		routes: '/quarantine/dashboard'
+	},
+	{
+		name: 'Stock Dashboard',
+		routes: '/stock/dashboard'
+	},
+	{
+		name: 'New Stock',
+		routes: '/stockForm'
+	},
+]
 
 
 class Header extends Component {
@@ -70,10 +99,16 @@ class Header extends Component {
 							</div>
 							<Nav className="ml-auto" navbar>
 							{
-								user && user.accessiblePaths && user.accessiblePaths.map((item) => {
+								// user && user.accessiblePaths && user.accessiblePaths.map((item) => {
+								// 	return (
+								// 	<NavItem className='headerNavItem'>
+								// 		<NavLink href={`${item.route}`}>{item.name}</NavLink>
+								// 	</NavItem>)
+								// })
+								routes.map((item) => {
 									return (
 									<NavItem className='headerNavItem'>
-										<NavLink href={`${item.route}`}>{item.name}</NavLink>
+										<NavLink href={`${item.routes}`}>{item.name}</NavLink>
 									</NavItem>)
 								})
 							}
