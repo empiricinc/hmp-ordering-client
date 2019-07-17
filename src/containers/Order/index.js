@@ -9,6 +9,7 @@ class Home extends React.Component {
   handleSubmit = (model) => {
     axios.post(`${config.apiUrl}/api/order`, model)
     .then((response) => {
+			axios.put(`${config.apiUrl}/api/order/approve-all`)
 			window.alert('order submitted successfully')
 			console.log(response);
 			window.location = '/order/dashboard'
