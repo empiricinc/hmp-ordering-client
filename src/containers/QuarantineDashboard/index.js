@@ -112,7 +112,7 @@ class QuarantineDashboard extends React.Component {
                 <th>Date of delivery</th>
                 <th>Approved By Manager</th>
                 <th>Resources</th>
-                {/* <th>Complete</th> */}
+                <th>Complete</th>
                 {/* {user && user.department == 'manager' && <th>Actions</th>} */}
               </tr>
             </thead>
@@ -157,7 +157,7 @@ class QuarantineDashboard extends React.Component {
                       }
                     </td>
                     {/* {user && user.department == 'manager' && <td><button className='button'>Approve Now</button></td>} */}
-                    {/* <td><button onClick={() => { this.completeQuarantine(order._id) }}>Complete From Quarantine</button></td> */}
+                    <td><button onClick={() => { this.completeQuarantine(order._id) }}>Complete From Quarantine</button></td>
                     {/* <td><button onClick={() => { this.rejectQuarantine(order._id) }}>Reject</button></td> */}
                   </tr>
                 }) : <tr><td colSpan='5'>No entries found</td></tr>
