@@ -119,7 +119,7 @@ class ProductionDashboard extends React.Component {
                 <th>Date of delivery</th>
                 <th>Approved By Manager</th>
                 <th>Resources</th>
-                {/* <th>Complete</th> */}
+                <th>Complete</th>
                 {/* <th>Reject</th> */}
                 {/* {user && user.department == 'manager' && <th>Actions</th>} */}
               </tr>
@@ -166,7 +166,10 @@ class ProductionDashboard extends React.Component {
                       }
                     </td>
                     {/* {user && user.department == 'manager' && <td><button className='button'>Approve Now</button></td>} */}
-                    {/* <td><button onClick={() => { this.completeProduction(order._id) }}>Complete From Production</button></td> */}
+                    <td>
+                      {order.status == 'inProgress' && <button onClick={() => { this.completeProduction(order._id) }}>Complete From Production</button>}
+                      {order.status == 'completed' && <button onClick={() => { this.completeProduction(order._id) }}>Send To Driver</button>}
+                    </td>
                     {/* <td><button onClick={() => { this.rejectProduction(order._id) }}>Reject</button></td> */}
                   </tr>
                 }) : <tr><td colSpan='8'>No Entries Found</td></tr>
