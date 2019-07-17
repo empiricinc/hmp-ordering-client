@@ -68,7 +68,7 @@ class Form extends Component {
               <FieldArray
                 name={'animals'}
                 component={renderAnimals}
-                />
+              />
               
             </div>
             <button className='btn-block-fixed btn-hmp-red' type='submit'>Submit</button>
