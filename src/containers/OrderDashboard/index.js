@@ -29,10 +29,29 @@ class Home extends React.Component {
       })
     })
   }
+  fetchNew () {
+    axios.get(`${config.apiUrl}/api/order`)
+    .then((response) => {
+      this.setState({
+        orders: response.data
+      })
+    })
+  }
   componentWillRecieveProps(nextProps) {
   }
   approveOrder(id) {
     axios.put(`${config.apiUrl}/api/order/approve/${id}`)
+    .then((response) => {
+      window.alert('Order has been approved')
+      this.fetchNew();
+    })
+  }
+  rejectOrder(id) {
+    axios.put(`${config.apiUrl}/api/order/approve/${id}`)
+    .then((response) => {
+      window.alert('Order has been approved')
+      this.fetchNew();
+    })
   }
   render() {
     const {orders} = this.state;
@@ -63,7 +82,16 @@ class Home extends React.Component {
             <td>{moment(order.flight_date).format('LL')}</td>
             <td>{moment(order.date_of_delivery).format('LL')}</td>
             <td>{order.isApprove ? 'Yes' : 'No'}</td>
-            {user && user.department == 'manager' && <td><button onClick={ () => {this.approveOrder(order._id)} } className='button'>Approve Now</button></td>}
+            {user && user.department == 'manager' && 
+            <td>
+              <button onClick={ () => {this.approveOrder(order._id)} } className='button'>
+                Approve 
+              </button>
+              <button onClick={ () => {this.approveOrder(order._id)} } className='button'>
+                Reject
+              </button>
+            </td>
+            }
           </tr>
         })
       }
