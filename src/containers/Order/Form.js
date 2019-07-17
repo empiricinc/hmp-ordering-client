@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, FieldArray } from 'redux-form'
 import axios from 'axios'
 import config from '../../config';
 // import {renderField} from '../../components/ReduxFormComponents'
 
 import './style.scss';
-import { renderField, isRequired, simpleSelect, Timer, renderTextarea } from '../../components/ReduxFormComponents';
+import { renderField, isRequired, simpleSelect, Timer, renderTextarea,renderOrderType } from '../../components/ReduxFormComponents';
 
 
 class Form extends Component {
@@ -16,13 +16,25 @@ class Form extends Component {
 				<Container>
           <form onSubmit={this.props.handleSubmit}>
             <div className='form-fixed-submit'>
-              <Field
+              {/* <Field
                 name="product_type"
                 component={simpleSelect} 
                 selectOptions={[{value:'mutton', name:'Mutton'}, {value:'beef', name:'Beef'}, {value:'chicken', name:'chicken'} ]} 
                 label='Product Type' 
                 placeholder='Select Product Type' 
                 validate={[isRequired]}
+              />
+              <Field
+                name="carcase_weight"
+                component={renderField}
+                type="number" 
+                label='Carcass Weight (KGs)' 
+                placeholder='Weight of the Carcass' 
+                validate={[isRequired]}
+              /> */}
+              <FieldArray
+                name={'order_items'}
+                component={renderOrderType}
               />
               <Field
                 name="date_of_delivery"
@@ -32,7 +44,6 @@ class Form extends Component {
                 placeholder='Date of Delivery' 
                 validate={[isRequired]}
               />
-
               <Field
                 name="mode_of_delivery"
                 component={simpleSelect} 
@@ -63,22 +74,6 @@ class Form extends Component {
                 type="date" 
                 label='Flight Date' 
                 placeholder='Date of Flight' 
-                validate={[isRequired]}
-              />
-              {/* <Field
-                name="flight_time"
-                component={Timer}
-                type="text" 
-                label='Flight Time' 
-                placeholder='Time of Flight' 
-                validate={[isRequired]}
-              /> */}
-              <Field
-                name="carcase_weight"
-                component={renderField}
-                type="number" 
-                label='Carcass Weight (KGs)' 
-                placeholder='Weight of the Carcass' 
                 validate={[isRequired]}
               />
               <Field
