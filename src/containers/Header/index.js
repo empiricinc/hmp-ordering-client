@@ -45,6 +45,10 @@ const routes = [
 		name: 'New Stock',
 		routes: '/stockForm'
 	},
+	{
+		name: 'Driver Dashboard',
+		routes: '/driver/dashboard'
+	},
 ]
 
 
