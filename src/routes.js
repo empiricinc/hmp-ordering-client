@@ -11,6 +11,8 @@ const Documentation = React.lazy(() => import('./containers/Documentation'));
 const DocumentationDashboard = React.lazy(() => import('./containers/DocumentationDashboard'));
 const Quarantine = React.lazy(() => import('./containers/Quarantine'));
 const QuarantineDashboard = React.lazy(() => import('./containers/QuarantineDashboard'));
+const Driver = React.lazy(() => import('./containers/Driver'));
+const DriverDashboard = React.lazy(() => import('./containers/DriverDashboard'));
 const Production = React.lazy(() => import('./containers/Production'));
 const ProductionDashboard = React.lazy(() => import('./containers/ProductionDashboard'));
 const Stock = React.lazy(() => import('./containers/Stock'));
@@ -29,6 +31,8 @@ export default (
       <Route exact path="/about" component={About}/>
       <Route exact path="/documentationForm/:id" component={Documentation}/>
       <Route exact path="/documentation/dashboard" component={DocumentationDashboard}/>
+      <Route exact path="/driverForm/:id" component={Driver}/>
+      <Route exact path="/driver/dashboard" component={DriverDashboard}/>
       <Route exact path="/quarantineForm/:id" component={Quarantine}/>
       <Route exact path="/quarantine/dashboard" component={QuarantineDashboard}/>
       <Route exact path="/productionForm/:id" component={Production}/>
