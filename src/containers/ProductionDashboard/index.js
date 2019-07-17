@@ -113,7 +113,7 @@ class ProductionDashboard extends React.Component {
               <tr>
                 <th>Product</th>
                 <th>Order Mode</th>
-                <th>Carcass Weight</th>
+                {/* <th>Carcass Weight</th> */}
                 <th>Mode of Delivery</th>
                 <th>Date of flight</th>
                 <th>Date of delivery</th>
@@ -128,9 +128,16 @@ class ProductionDashboard extends React.Component {
               {
                 orders.length ? orders.map((order, index) => {
                   return <tr>
-                    <td>{order.order.product_type}</td>
+                    <td>{
+                      order.order.order_items.map((item,index) => {
+                        return <div>
+                          <h6>{item.item}</h6>
+                          <p>{item.carcass_weight} KGs</p>
+                        </div>
+                    })
+                    }</td>
                     <td>{order.order.mode}</td>
-                    <td>{order.order.carcase_weight}</td>
+                    {/* <td>{order.order.carcase_weight}</td> */}
                     <td>{order.order.mode_of_delivery}</td>
                     <td>{moment(order.order.flight_date).format('LL')}</td>
                     <td>{moment(order.order.date_of_delivery).format('LL')}</td>
@@ -176,7 +183,7 @@ class ProductionDashboard extends React.Component {
                 <tr>
                   <th>Product</th>
                   <th>Order Mode</th>
-                  <th>Carcass Weight</th>
+                  {/* <th>Carcass Weight</th> */}
                   <th>Mode of Delivery</th>
                   <th>Date of flight</th>
                   <th>Date of delivery</th>
@@ -188,9 +195,16 @@ class ProductionDashboard extends React.Component {
                 {
                   orders.length ? orders.map((order, index) => {
                     return <tr>
-                      <td>{order.order.product_type}</td>
+                      <td>{
+                      order.order.order_items.map((item,index) => {
+                        return <div>
+                          <h6>{item.item}</h6>
+                          <p>{item.carcass_weight} KGs</p>
+                        </div>
+                    })
+                    }</td>
                       <td>{order.order.mode}</td>
-                      <td>{order.order.carcase_weight}</td>
+                      {/* <td>{order.order.carcase_weight}</td> */}
                       <td>{order.order.mode_of_delivery}</td>
                       <td>{moment(order.order.flight_date).format('LL')}</td>
                       <td>{moment(order.order.date_of_delivery).format('LL')}</td>
