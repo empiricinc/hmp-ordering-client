@@ -19,11 +19,11 @@ class QuarantineDashboard extends React.Component {
   }
   componentDidMount() {
     axios.get(`${config.apiUrl}/api/stock?status=pending`)
-    .then((response) => {
-      this.setState({
-        orders: response.data
+      .then((response) => {
+        this.setState({
+          orders: response.data
+        })
       })
-    })
   }
   componentWillRecieveProps(nextProps) {
   }
@@ -38,53 +38,55 @@ class QuarantineDashboard extends React.Component {
 
   }
   completeQuarantine(id) {
-    axios.put(`${config.apiUrl}/api/doc_team/${id}`, {status: 'complete'})
+    axios.put(`${config.apiUrl}/api/doc_team/${id}`, { status: 'complete' })
   }
   rejectQuarantine(id) {
-    axios.put(`${config.apiUrl}/api/doc_team/${id}`, {status: 'rejected'})
+    axios.put(`${config.apiUrl}/api/doc_team/${id}`, { status: 'rejected' })
   }
   render() {
-    const {orders} = this.state;
-    const {user} = this.props;
-    return(
-    <div class="quarantineDashWrapper table-responsive table-striped">  
-    
-    <h3 className='pl-3 bold'>Documentation Dashboard</h3>
-        <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>        
-  <table class="table">
-    <thead>
-      <tr>
-        <th>GRN</th>
-        <th>Mandi</th>
-        <th>Procured By</th>
-        <th>Total Animals</th>
-        <th>Added on</th>
-        <th>View Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        orders.map((order, index) => {
-          return <tr>
-            <td>{order.grn}</td>
-            <td>{order.mandi}</td>
-            <td>{order.procured_by}</td>
-            <td>{order.total_animals}</td>
-            <td>{moment(order.createdAt).format('LL')}</td>
-            <td><button onClick={() => this.showDetails(order._id, 'stock')}>View Details</button></td>
-          </tr>
-        })
-      }
-    </tbody>
-  </table>
-  </div>
-  )
+    const { orders } = this.state;
+    const { user } = this.props;
+    return (
+      <React.Fragment>
+
+        <h3 className='pl-3 bold'>Stock Dashboard</h3>
+        <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>
+        <div class="quarantineDashWrapper table-responsive table-striped">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>GRN</th>
+                <th>Mandi</th>
+                <th>Procured By</th>
+                <th>Total Animals</th>
+                <th>Added on</th>
+                <th>View Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                orders.map((order, index) => {
+                  return <tr>
+                    <td>{order.grn}</td>
+                    <td>{order.mandi}</td>
+                    <td>{order.procured_by}</td>
+                    <td>{order.total_animals}</td>
+                    <td>{moment(order.createdAt).format('LL')}</td>
+                    <td><button onClick={() => this.showDetails(order._id, 'stock')}>View Details</button></td>
+                  </tr>
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      </React.Fragment>
+    )
   }
 }
 
 
 export default withRouter(connect(store => {
-  return{
+  return {
     user: store.users.user,
   }
 })(QuarantineDashboard))
