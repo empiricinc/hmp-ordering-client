@@ -47,7 +47,10 @@ class QuarantineDashboard extends React.Component {
     const {orders} = this.state;
     const {user} = this.props;
     return(
-    <div class="quarantineDashWrapper table-responsive table-striped">          
+    <div class="quarantineDashWrapper table-responsive table-striped">  
+    
+    <h3 className='pl-3 bold'>Documentation Dashboard</h3>
+        <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>        
   <table class="table">
     <thead>
       <tr>
