@@ -83,3 +83,13 @@
   border-radius: 10px;
   border: 1px solid #ddd;
 }
+
+.table-striped {
+  & table {
+    border: 1px solid #ddd;
+  }
+}
+
+.table-responsive {
+  padding-left: 1rem !important;
+}
