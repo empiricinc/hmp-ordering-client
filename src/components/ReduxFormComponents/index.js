@@ -243,7 +243,7 @@ export const renderAnimals = ({ fields }) => {
 export const renderOrderType = ({ fields }) => {
   return (
     <div>
-      <h4 className='bold text-left'>Order Details</h4>
+      <h4 className='bold text-left'>ORDER DETAILS</h4>
       {fields.map((product, index) => (
         <div className='productWrapper'>
           <h6 className='inputLabel text-left'>Product Type</h6>
