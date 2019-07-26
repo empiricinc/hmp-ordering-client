@@ -28,7 +28,7 @@ class Form extends Component {
               <Field
                 name="password"
                 component={renderField}
-                type="text" 
+                type="password" 
                 label='password' 
                 placeholder='Password' 
                 validate={[isRequired]}
