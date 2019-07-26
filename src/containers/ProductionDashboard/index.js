@@ -91,6 +91,8 @@ class ProductionDashboard extends React.Component {
     const { user } = this.props;
     return (
       <div>
+        <h3 className='pl-3 bold'>Production Dashboard</h3>
+        <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>
         <div style={{ height: '75px' }}>
           <div style={{ width: '100%' }} className='text-center'>
             <p className='inline-block'>Showing</p>
