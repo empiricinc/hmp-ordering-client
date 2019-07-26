@@ -213,7 +213,7 @@ export const renderAnimals = ({ fields }) => {
     <div>
       <h3 className='space-4'>Animals Informatiom</h3>
       {fields.map((animal, index) => (
-        <div>
+        <div className='productWrapper'>
           <h6 className='inputLabel text-left'>Animal Type</h6>
           <Field name={`${animal}.type`} key={index} component={renderField} />
           <h6 className='inputLabel text-left'>Animal Tag</h6>
@@ -228,14 +228,12 @@ export const renderAnimals = ({ fields }) => {
             key={`${index} + b`}
             component={renderField}
           />
-          <hr/>
-        <hr/>
         </div>
       ))}
-      <button type="button" onClick={() => fields.push()}>
+      <button className='addButton' type="button" onClick={() => fields.push()}>
         Add more
       </button>
-      {fields.length ? <button type="button" onClick={() => fields.pop()}>
+      {fields.length ? <button  className='removeButton' type="button" onClick={() => fields.pop()}>
         Remove Last
       </button> : null}
     </div>
@@ -245,9 +243,9 @@ export const renderAnimals = ({ fields }) => {
 export const renderOrderType = ({ fields }) => {
   return (
     <div>
-      <h3 className='text-left'>Order Details</h3>
+      <h4 className='bold text-left'>Order Details</h4>
       {fields.map((product, index) => (
-        <div>
+        <div className='productWrapper'>
           <h6 className='inputLabel text-left'>Product Type</h6>
           <Field 
           name={`${product}.item`}
@@ -256,20 +254,20 @@ export const renderOrderType = ({ fields }) => {
           component={simpleSelect}
           selectOptions={[{value:'mutton', name:'Mutton'}, {value:'beef', name:'Beef'}, {value:'chicken', name:'chicken'} ]} 
           />
-          <h6 className='inputLabel text-left'>Carcass Weight</h6>
+          <h6 className='inputLabel text-left'>Carcass Weight (in KGs)</h6>
           <Field
             name={`${product}.carcass_weight`}
             key={`${index} + b`}
             component={renderField}
           />
           {/* <hr/> */}
-        <hr/>
+        {/* <hr/> */}
         </div>
       ))}
-      <button type="button" onClick={() => fields.push()}>
-        Add products
+      <button className='space-4 addButton' type="button" onClick={() => fields.push()}>
+        Add product
       </button>
-      {fields.length ? <button type="button" onClick={() => fields.pop()}>
+      {fields.length ? <button type="button" className='space-4 removeButton' onClick={() => fields.pop()}>
         Remove Last
       </button> : null}
     </div>
