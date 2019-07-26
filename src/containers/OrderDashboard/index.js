@@ -57,7 +57,10 @@ class Home extends React.Component {
     const { orders } = this.state;
     const { user } = this.props;
     return (
-      <div class="orderDashWrapper  table-responsive table-striped">
+      <React.Fragment>
+        <h3 className='pl-3 bold'>Order Dashboard</h3>
+        <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>
+      <div class="orderDashWrapper pl-3 table-responsive table-striped">
         <table class="table">
           <thead>
             <tr>
@@ -111,6 +114,7 @@ class Home extends React.Component {
           </tbody>
         </table>
       </div>
+    </React.Fragment>
     )
   }
 }
