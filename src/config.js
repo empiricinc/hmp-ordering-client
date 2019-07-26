@@ -1,5 +1,5 @@
 const config = {
-  apiUrl : 'http://localhost:9000',
+  apiUrl : 'http://3.218.30.89',
   apiKey: '498392422663638',
 }
 
