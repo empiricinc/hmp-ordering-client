@@ -14,6 +14,10 @@ class Form extends Component {
 	render() {
 		return (
 			<div className='homeContainer' id="home">
+        <div className='text-left'>
+        <h3 className='pl-3 bold'>Add Documentation Resources</h3>
+        <p className='pl-3 space-4'>Add related resources and submit</p>
+        </div>
 				<Container>
           <form onSubmit={this.props.handleSubmit}>
             <div className='form-fixed-submit'>
