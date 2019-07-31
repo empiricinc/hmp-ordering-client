@@ -21,7 +21,7 @@ class QuarantineDashboard extends React.Component {
     }
   }
   componentDidMount() {
-    axios.get(`${config.apiUrl}/api/quarantine_dept?status=pending`)
+    axios.get(`${config.apiUrl}/api/drivers?status=pending`)
       .then((response) => {
         this.setState({
           orders: response.data
@@ -30,7 +30,7 @@ class QuarantineDashboard extends React.Component {
   }
   fetchNew = () => {
     this.setState({ orders: [] })
-    axios.get(`${config.apiUrl}/api/quarantine_dept?status=${this.state.selectedStatus}`)
+    axios.get(`${config.apiUrl}/api/drivers?status=${this.state.selectedStatus}`)
       .then((response) => {
         this.setState({
           orders: response.data
@@ -41,7 +41,7 @@ class QuarantineDashboard extends React.Component {
   }
   addResources(id) {
     // console.log(this.props);
-    this.props.history.push(`/quarantineForm/${id}`)
+    this.props.history.push(`/driverForm/${id}`)
 
   }
   showDetails(id, department) {
@@ -74,6 +74,18 @@ class QuarantineDashboard extends React.Component {
       })
   }
 
+  deliver(id, dId) {
+    axios.put(`${config.apiUrl}/api/drivers/${dId}`, { status: 'delivered' })
+      .then(() => {
+        axios.put(`${config.apiUrl}/api/order/complete/${id}`)
+      .then(() => {
+        this.setState({ orders: [] }, () => {
+          this.fetchNew()
+        })
+      })
+      })
+  }
+
   toggle = () => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
@@ -93,8 +105,7 @@ class QuarantineDashboard extends React.Component {
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem onClick={() => { this.setState({ selectedStatus: 'pending' }, () => { this.fetchNew('pending') }) }}>Pending</DropdownItem>
-                <DropdownItem onClick={() => { this.setState({ selectedStatus: 'inProgress' }, () => { this.fetchNew('inProgress') }) }}>In Progress</DropdownItem>
-                <DropdownItem onClick={() => { this.setState({ selectedStatus: 'completed' }, () => { this.fetchNew('completed') }) }}>Completed</DropdownItem>
+                <DropdownItem onClick={() => { this.setState({ selectedStatus: 'delivered' }, () => { this.fetchNew('delivered') }) }}>delivered</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <p className='inline-block'>entries</p>
@@ -110,9 +121,6 @@ class QuarantineDashboard extends React.Component {
                 <th>Mode of Delivery</th>
                 <th>Date of flight</th>
                 <th>Date of delivery</th>
-                <th>Approved By Manager</th>
-                <th>Resources</th>
-                <th>Complete</th>
                 {/* {user && user.department == 'manager' && <th>Actions</th>} */}
               </tr>
             </thead>
@@ -133,31 +141,10 @@ class QuarantineDashboard extends React.Component {
                     <td>{order.order.mode_of_delivery}</td>
                     <td>{moment(order.order.flight_date).format('LL')}</td>
                     <td>{moment(order.order.date_of_delivery).format('LL')}</td>
-                    <td>{order.order.isApprove ? 'Yes' : 'No'}</td>
+                    {/* <td><button onClick={() => {this.addResources(order.order._id)}}>Add details</button></td>
                     <td>
-                      {
-                        <div>
-                          <button onClick={() => { this.addResources(order._id) }}>Add/Edit Resources</button>
-                        </div>
-                      }
-                      {
-                        <div>
-                          <button onClick={() => { this.showDetails(order._id, 'quarantine') }}>View Quarantine Resources</button>
-                        </div>
-                      }
-                      {
-                        <div>
-                          <button onClick={() => { this.showDetails(order.order.production_team, 'production') }}>View Production Resources</button>
-                        </div>
-                      }
-                      {
-                        <div>
-                          <button onClick={() => { this.showDetails(order.order.documentation_team, 'documentation') }}>View Documentation Resources</button>
-                        </div>
-                      }
-                    </td>
-                    {/* {user && user.department == 'manager' && <td><button className='button'>Approve Now</button></td>} */}
-                    <td><button onClick={() => { this.completeQuarantine(order._id) }}>Complete From Quarantine</button></td>
+                      <button onClick={() => {this.deliver(order.order._id)}}>Mark As Complete</button>
+                    </td> */}
                     {/* <td><button onClick={() => { this.rejectQuarantine(order._id) }}>Reject</button></td> */}
                   </tr>
                 }) : <tr><td colSpan='5'>No entries found</td></tr>
@@ -177,8 +164,8 @@ class QuarantineDashboard extends React.Component {
                   <th>Mode of Delivery</th>
                   <th>Date of flight</th>
                   <th>Date of delivery</th>
-                  <th>Accept</th>
-                  <th>Reject</th>
+                  <th>Add Details</th>
+                  <th>Complete</th>
                 </tr>
               </thead>
               <tbody>
@@ -198,8 +185,11 @@ class QuarantineDashboard extends React.Component {
                       <td>{order.order.mode_of_delivery}</td>
                       <td>{moment(order.order.flight_date).format('LL')}</td>
                       <td>{moment(order.order.date_of_delivery).format('LL')}</td>
-                      <td><button onClick={() => { this.acceptQuarantine(order._id) }}>Accept</button></td>
-                      <td><button onClick={() => { this.rejectQuarantine(order._id) }}>Reject</button></td>
+
+                    <td><button onClick={() => {this.addResources(order._id)}}>Add details</button></td>
+                    <td>
+                      <button onClick={() => {this.deliver(order.order._id, order._id)}}>Mark As Delivered</button>
+                    </td>
                     </tr>
                   }) : <tr><td colSpan='8'>No Entries Found</td></tr>
                 } 
