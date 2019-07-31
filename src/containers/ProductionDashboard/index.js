@@ -86,6 +86,17 @@ class ProductionDashboard extends React.Component {
       dropdownOpen: !this.state.dropdownOpen,
     })
   }
+  sendToDriver = (id, prodId) => {
+    axios.post(`${config.apiUrl}/api/drivers`,{order: id})
+    .then(() => {
+      axios.put(`${config.apiUrl}/api/production_dept/${prodId}`, { status: 'completed' })
+      .then(() => {
+        this.setState({ orders: [] }, () => {
+          this.fetchNew()
+        })
+      })
+    })
+  }
   render() {
     const { orders, selectedStatus } = this.state;
     const { user } = this.props;
@@ -121,7 +132,7 @@ class ProductionDashboard extends React.Component {
                 <th>Date of delivery</th>
                 <th>Approved By Manager</th>
                 <th>Resources</th>
-                <th>Complete</th>
+                {selectedStatus != 'completed' && <th>Send to Driver</th>}
                 {/* <th>Reject</th> */}
                 {/* {user && user.department == 'manager' && <th>Actions</th>} */}
               </tr>
@@ -158,20 +169,23 @@ class ProductionDashboard extends React.Component {
                       
                       {
                         <div>
-                          <button onClick={() => { this.showDetails(order.order.quarantine_team, 'quarantine') }}>View Quarantine Resources</button>
+                          <button onClick={() => { this.showDetails(order.order.quarantine_team._id, 'quarantine') }}>View Quarantine Resources</button>
                         </div>
                       }
                       {
                         <div>
-                          <button onClick={() => { this.showDetails(order.order.documentation_team, 'documentation') }}>View Documentation Resources</button>
+                          <button onClick={() => { this.showDetails(order.order.documentation_team._id, 'documentation') }}>View Documentation Resources</button>
                         </div>
                       }
                     </td>
                     {/* {user && user.department == 'manager' && <td><button className='button'>Approve Now</button></td>} */}
-                    <td>
-                      {order.status == 'inProgress' && <button onClick={() => { this.completeProduction(order._id) }}>Complete From Production</button>}
-                      {order.status == 'completed' && <button onClick={() => { this.completeProduction(order._id) }}>Send To Driver</button>}
-                    </td>
+                    {selectedStatus != 'completed' && <td>
+                      {/* {order.status == 'inProgress' && <button onClick={() => { this.completeProduction(order._id) }}>Complete From Production</button>} */}
+                      {
+                        // order.status == 'completed' && 
+                      <button onClick={() => { this.sendToDriver(order.order._id, order._id) }}>Send To Driver</button>
+                      }
+                    </td>}
                     {/* <td><button onClick={() => { this.rejectProduction(order._id) }}>Reject</button></td> */}
                   </tr>
                 }) : <tr><td colSpan='8'>No Entries Found</td></tr>
