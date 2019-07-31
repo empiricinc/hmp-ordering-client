@@ -29,48 +29,22 @@ class QuarantineForm extends React.Component {
 	
   handleSubmit = (model) => {
     console.log(model)
-		const filesToUpload = [{name: 'proof_doc' , file:model.proof_doc}];
-		var filesUrls = {};
-		const uploaders = filesToUpload.map((file) => {
-			if(file.file, !validURL(file.file)) {
-					let params = new URLSearchParams();
-					params.append('upload_preset', 'iawxhtp4')
-					params.append('api_key', config.apiKey,)
-					params.append('file', file.file)
-					return axios({
-						url: 'https://api.cloudinary.com/v1_1/hmp/image/upload',
-						method: 'post',
-						transformRequest: [(data, headers) => {
-							delete headers.common.Authorization
-							return data
-					}],
-						data: params,
-				})
-					.then((response) => {
-						// console.log('single response', response);
-						delete model[file.name];
-						return filesUrls[file.name] = response.data.secure_url
-					})
-			} else {
-				var promise = new Promise((res, rej)=>{res(); return true});
-				return promise
-			}
-		})
-		axios.all(uploaders)
-		.then(response => {
-			axios.put(`${config.apiUrl}/api/quarantine_dept/${this.orderId}`, {...model, ...filesUrls})
-			.then(() => {
+		
+		// axios.all(uploaders)
+		// .then(response => {
+			axios.put(`${config.apiUrl}/api/drivers/${this.orderId}`, {...model})
+			.then((response) => {
 				window.alert('resources added successfully');
 				window.location = '/quarantine/dashboard'
+				console.log('all response', response)
 			})
-			console.log('all response', response)
-		})
-		.catch()
+		// })
+		// .catch()
 	}
 	componentDidMount() {
 		const {match} = this.props;
 		this.orderId = match.params.id;
-		axios.get(`${config.apiUrl}/api/quarantine_dept/${this.orderId}`)
+		axios.get(`${config.apiUrl}/api/drivers/${this.orderId}`)
 		.then((response) => {
 			if(response.data.vehicle_availability === false) {
 				response.data.vehicle_availability = 'false';
