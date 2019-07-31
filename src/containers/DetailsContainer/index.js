@@ -45,7 +45,7 @@ class Details extends Component {
       delete response.data._id
       delete response.data.updatedAt
       delete response.data.createdAt
-      response.data.vehicle_availability = response.data.vehicle_availability === true ? 'Yes' : 'NO' 
+      var a = this.department == 'production' && (response.data.vehicle_availability != null  || response.data.vehicle_availability != undefined) ? (response.data.vehicle_availability = response.data.vehicle_availability === true ? 'Yes' : 'NO') : null
       this.setState({details: response.data})
     })
   }
