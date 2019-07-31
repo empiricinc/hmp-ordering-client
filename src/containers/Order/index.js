@@ -10,9 +10,11 @@ class Home extends React.Component {
     axios.post(`${config.apiUrl}/api/order`, model)
     .then((response) => {
 			axios.put(`${config.apiUrl}/api/order/approve-all`)
-			window.alert('order submitted successfully')
-			console.log(response);
-			window.location = '/order/dashboard'
+			.then(() => {
+				window.alert('order submitted successfully')
+				console.log(response);
+				window.location = '/order/dashboard'
+			})
     })
   }
 	render() {
