@@ -20,31 +20,53 @@ class Form extends Component {
           <form onSubmit={this.props.handleSubmit}>
             <div className='form-fixed-submit'>
               <Field
-                name="date_of_quarantine"
+                name="name"
+                component={renderField}
+                type="text" 
+                label='Name of Driver' 
+                placeholder='Name of Driver' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="phone"
+                component={renderField}
+                type="number" 
+                label='Contact no. of Driver' 
+                placeholder='Contact no. of Driver' 
+                validate={[isRequired]}
+              />
+              <Field
+                name="delivery_date"
                 component={renderField}
                 type="date" 
-                label='Date of Quarantine' 
-                placeholder='Date of Quarantine' 
+                label='Date of Delivery' 
+                placeholder='Date of Delivery' 
                 validate={[isRequired]}
               />
               <Field
-                name="proof_doc"
-                component={FileInput}
-                type="file" 
-                label='Quarantine Proof Documents' 
-                placeholder='Quarantine Proof Documents' 
-                validate={[isRequired]}
-              />
-              <Field
-                name="department"
-                component={simpleSelect}
+                name="delivery_time"
+                component={Timer}
                 type="text" 
-                label='Quarantine Department Type'
-                selectOptions={[{value:'government', name:'Government'}, {value:'private', name:'Private'}]} 
-                placeholder='Quarantine Department Type'  
+                label='Time of Delivery' 
+                placeholder='Time of Delivery' 
+                //validate={[isRequired]}
+              />
+              <Field
+                name="package_weight"
+                component={renderField}
+                type="number" 
+                label='Weight of Package (in KGs)' 
+                placeholder='Weight of Package (in KGs)' 
                 validate={[isRequired]}
               />
-              
+              <Field
+                name="custom_weight"
+                component={renderField}
+                type="number" 
+                label='Customs Weight (in KGs)' 
+                placeholder='Customs Weight (in KGs)' 
+                validate={[isRequired]}
+              />
             </div>
             <button className='btn-block-fixed btn-hmp-red' type='submit'>Submit</button>
           </form>
