@@ -10,6 +10,8 @@ import { setUserInfo } from '../../actions/users'
 import { connect } from "react-redux";
 import moment from 'moment'
 import './style.scss'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
 
 
 class Home extends React.Component {
@@ -19,6 +21,7 @@ class Home extends React.Component {
       authenticating: true,
       authenticated: false,
       orders: [],
+      selectedStatus: 'inProgress',
     }
   }
   componentDidMount() {
@@ -29,8 +32,8 @@ class Home extends React.Component {
         })
       })
   }
-  fetchNew() {
-    axios.get(`${config.apiUrl}/api/order?isApprove=true`)
+  fetchNew(status) {
+    axios.get(`${config.apiUrl}/api/order?isApprove=${true}&isCompleted=${this.state.selectedStatus == 'completed' ? true : false }`)
       .then((response) => {
         this.setState({
           orders: response.data
@@ -53,6 +56,11 @@ class Home extends React.Component {
         this.fetchNew();
       })
   }
+  toggle = () => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+    })
+  }
   render() {
     const { orders } = this.state;
     const { user } = this.props;
@@ -60,6 +68,21 @@ class Home extends React.Component {
       <React.Fragment>
         <h3 className='pl-3 bold'>Order Dashboard</h3>
         <p className='pl-3 space-4'>Scroll Horizontally to view details of all placed orders</p>
+        <div style={{ height: '75px' }}>
+          <div style={{ width: '100%' }} className='text-center'>
+            <p className='inline-block'>Showing</p>
+            <Dropdown style={{ textAlign: 'center', display: 'inline-block' }} isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle className={'dropdownButton'} caret>
+                {this.state.selectedStatus}
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => { this.setState({ selectedStatus: 'inProgress' }, () => { this.fetchNew('inProgress') }) }}>inProgress</DropdownItem>
+                <DropdownItem onClick={() => { this.setState({ selectedStatus: 'completed' }, () => { this.fetchNew('completed') }) }}>completed</DropdownItem>
+            </DropdownMenu>
+            </Dropdown>
+            <p className='inline-block'>entries</p>
+          </div>
+        </div>
       <div class="orderDashWrapper pl-3 table-responsive table-striped">
         <table class="table">
           <thead>
