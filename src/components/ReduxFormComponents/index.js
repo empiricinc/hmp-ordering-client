@@ -74,12 +74,14 @@ export const disabledField = ({ type, label, input, meta: { touched, error } }) 
     <div className='inputform'> <input className='form-control input-box' {...input} type={type} placeholder={label} readOnly="readonly" ></input></div>)
 
 }
+
+
 export const renderField = ({ type, label, input, min, placeholder, max, meta: { touched, error } }) => {
 
   const dateProps = type == 'date' ? { min, max } : null
   if(type == 'date') {
     delete input.value;
-    dateProps.value = moment(input.value).format('YYYY-MM-DD')
+    // dateProps.value = moment(input.value).format('YYYY-MM-DD')
   }
   // console.log('dateValue',input.value)
   return (<div className='inputform space-4'>
